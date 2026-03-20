@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Darkside Electrical | Hawthorn, Melbourne</title>
+  <meta name="description" content="Electrical insights, safety tips, and industry news from Darkside Electrical — licensed electricians in Hawthorn, Melbourne."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --dark:        #141414;
+      --dark-2:      #1E1E1E;
+      --dark-3:      #252525;
+      --off-white:   #F4F2EE;
+      --yellow:      #FFD60A;
+      --yellow-dim:  #CCA900;
+      --yellow-dark: #7A6500;
+      --muted:       #888880;
+      --display:     'Bebas Neue', sans-serif;
+      --body:        'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--off-white);
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── SKIP LINK ──────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      z-index: 9999;
+      background: var(--yellow);
+      color: var(--dark);
+      font-family: var(--body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+    }
+    .logo span { color: var(--yellow); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+      padding: 6px 0;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus { color: var(--yellow); }
+    .nav-links a[aria-current="page"] { color: var(--yellow); }
+    .nav-links a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+    .btn-nav {
+      background: var(--yellow);
+      color: var(--dark);
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+    .btn-nav:hover,
+    .btn-nav:focus { background: var(--yellow-dim); }
+    .btn-nav:focus-visible { outline: 2px solid var(--off-white); outline-offset: 3px; }
+
+    /* ─── HAMBURGER ──────────────────────────────────────── */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px; height: 44px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--off-white);
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 69px; left: 0; right: 0;
+      z-index: 99;
+      background: rgba(20,20,20,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 20px 32px;
+      flex-direction: column;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--yellow); }
+    .mobile-nav .btn-nav { margin-top: 20px; width: 100%; text-align: center; padding: 16px; }
+
+    /* ─── BLOG HERO ──────────────────────────────────────── */
+    .blog-hero {
+      padding: 140px 48px 72px;
+      background: var(--dark);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 40%;
+      background: linear-gradient(90deg, transparent, rgba(255,214,10,0.03));
+      pointer-events: none;
+    }
+    .blog-hero-inner { max-width: 720px; }
+    .sec-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-label::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .blog-hero h1 {
+      font-family: var(--display);
+      font-size: clamp(52px, 7vw, 88px);
+      line-height: 0.92;
+      color: var(--off-white);
+      margin-bottom: 24px;
+    }
+    .blog-hero h1 .acc { color: var(--yellow); }
+    .blog-hero-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* ─── FILTER BAR ─────────────────────────────────────── */
+    .filter-bar {
+      background: var(--dark-2);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      font-family: var(--body);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 18px 24px 16px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      min-height: 52px;
+    }
+    .filter-btn:hover { color: var(--yellow); }
+    .filter-btn.active {
+      color: var(--yellow);
+      border-bottom-color: var(--yellow);
+    }
+    .filter-btn:focus-visible { outline: 2px solid var(--yellow); outline-offset: -2px; }
+
+    /* ─── FEATURED POST ──────────────────────────────────── */
+    .featured-section {
+      padding: 64px 48px 0;
+      background: var(--dark);
+    }
+    .featured-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yellow-dim);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .featured-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: currentColor;
+    }
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 64px;
+      transition: background 0.2s;
+    }
+    .featured-card:hover { background: rgba(255,255,255,0.04); }
+    .featured-image {
+      background: var(--dark-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-image svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.08;
+    }
+    .feat-icon {
+      position: relative;
+      z-index: 2;
+    }
+    .featured-content {
+      background: var(--dark-2);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .post-category {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .post-category::before {
+      content: '';
+      width: 16px; height: 1px;
+      background: var(--yellow);
+    }
+    .featured-title {
+      font-family: var(--display);
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.0;
+      color: var(--off-white);
+      margin-bottom: 16px;
+    }
+    .featured-excerpt {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .post-meta {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+    .btn-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow);
+      color: var(--dark);
+      font-family: var(--body);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-height: 44px;
+      align-self: flex-start;
+    }
+    .btn-read:hover,
+    .btn-read:focus { background: var(--yellow-dim); }
+    .btn-read:focus-visible { outline: 2px solid var(--off-white); outline-offset: 3px; }
+
+    /* ─── POST GRID ──────────────────────────────────────── */
+    .posts-section {
+      padding: 0 48px 80px;
+      background: var(--dark);
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .post-card {
+      background: var(--dark-2);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.2s;
+    }
+    .post-card:hover { background: var(--dark-3); }
+    .post-card:focus-within { background: var(--dark-3); }
+    .card-category {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 14px;
+    }
+    .card-title {
+      font-family: var(--display);
+      font-size: 22px;
+      line-height: 1.05;
+      color: var(--off-white);
+      margin-bottom: 14px;
+    }
+    .card-excerpt {
+      font-size: 12px;
+      line-height: 1.8;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 24px;
+    }
+    .card-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-meta {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .card-link {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      transition: color 0.2s;
+    }
+    .card-link:hover,
+    .card-link:focus { color: var(--yellow-dim); }
+    .card-link:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+
+    /* ─── NEWSLETTER CTA ─────────────────────────────────── */
+    .newsletter {
+      background: var(--yellow);
+      padding: 72px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .newsletter-left h2 {
+      font-family: var(--display);
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 0.95;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .newsletter-left p {
+      font-size: 12px;
+      color: rgba(20,20,20,0.6);
+      line-height: 1.7;
+      max-width: 360px;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      flex-shrink: 0;
+      max-width: 400px;
+      width: 100%;
+    }
+    .newsletter-input {
+      flex: 1;
+      background: var(--dark);
+      color: var(--off-white);
+      border: none;
+      padding: 16px 20px;
+      font-family: var(--body);
+      font-size: 14px;
+      outline: none;
+      min-height: 52px;
+    }
+    .newsletter-input::placeholder { color: var(--muted); }
+    .newsletter-input:focus { box-shadow: inset 0 0 0 2px var(--dark); }
+    .newsletter-submit {
+      background: var(--dark);
+      color: var(--yellow);
+      font-family: var(--body);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 16px 24px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-height: 52px;
+      min-width: 44px;
+      white-space: nowrap;
+    }
+    .newsletter-submit:hover { background: #1a1a1a; }
+    .newsletter-submit:focus-visible { outline: 2px solid var(--dark); outline-offset: 3px; }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 56px 48px 32px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 40px;
+    }
+    .ft-name { font-family: var(--display); font-size: 20px; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .ft-name span { color: var(--yellow); }
+    .ft-tagline { font-size: 12px; color: var(--muted); line-height: 1.7; max-width: 240px; }
+    .ft-head { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 16px; }
+    .ft-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .ft-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+    .ft-links a:hover,
+    .ft-links a:focus { color: var(--off-white); }
+    .ft-bottom {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .ft-copy { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
+    .ft-credit { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; font-style: italic; }
+    .ft-credit a { color: var(--yellow); border-bottom: 1px solid rgba(255,214,10,0.3); font-style: normal; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .blog-hero-inner { animation: fadeUp 0.7s ease 0.1s both; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .posts-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links, .btn-nav.desktop { display: none; }
+      .menu-toggle { display: flex; }
+
+      .blog-hero { padding: 100px 20px 56px; }
+      .filter-bar { padding: 0 20px; }
+      .filter-btn { padding: 16px 16px 14px; }
+
+      .featured-section { padding: 48px 20px 0; }
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-image { min-height: 200px; }
+      .featured-content { padding: 32px 24px; }
+
+      .posts-section { padding: 0 20px 60px; }
+      .posts-grid { grid-template-columns: 1fr; }
+
+      .newsletter { flex-direction: column; padding: 56px 20px; gap: 32px; }
+      .newsletter-form { max-width: 100%; }
+
+      footer { grid-template-columns: 1fr; padding: 48px 20px 28px; }
+      .ft-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SKIP LINK -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- NAV -->
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="Darkside Electrical – Home">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <polygon points="16,2 6,16 13,16 10,26 22,12 15,12" fill="#FFD60A"/>
+      </svg>
+      DARK<span>SIDE</span>&nbsp;ELECTRICAL
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="blog.html" aria-current="page">Blog</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="estimate.html" class="btn-nav desktop">Get a Quote</a>
+    <button
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#about">About</a>
+    <a href="blog.html" style="color:var(--yellow);">Blog</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="estimate.html" class="btn-nav">Get a Quote</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main-content">
+
+    <!-- BLOG HERO -->
+    <header class="blog-hero" aria-labelledby="blog-title">
+      <div class="blog-hero-inner">
+        <div class="sec-label" aria-hidden="true">From the Field</div>
+        <h1 id="blog-title">ELECTRICAL<br><span class="acc">INSIGHTS.</span></h1>
+        <p class="blog-hero-desc">Practical advice on home safety, EV charging, switchboard upgrades, and what's actually going on behind your walls — from licensed electricians who do this work every day.</p>
+      </div>
+    </header>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar" role="navigation" aria-label="Filter posts by category">
+      <button class="filter-btn active" onclick="filterPosts('all')" aria-pressed="true">All Posts</button>
+      <button class="filter-btn" onclick="filterPosts('safety')" aria-pressed="false">Safety</button>
+      <button class="filter-btn" onclick="filterPosts('ev')" aria-pressed="false">EV Charging</button>
+      <button class="filter-btn" onclick="filterPosts('renovations')" aria-pressed="false">Renovations</button>
+      <button class="filter-btn" onclick="filterPosts('commercial')" aria-pressed="false">Commercial</button>
+      <button class="filter-btn" onclick="filterPosts('guides')" aria-pressed="false">Guides</button>
+    </div>
+
+    <!-- FEATURED POST -->
+    <section class="featured-section" aria-labelledby="featured-heading">
+      <div class="featured-label" aria-hidden="true">Featured Article</div>
+      <article class="featured-card" id="featured-post">
+        <div class="featured-image" aria-hidden="true">
+          <svg viewBox="0 0 600 400" fill="none" preserveAspectRatio="xMidYMid slice">
+            <line x1="0" y1="0" x2="600" y2="400" stroke="#FFD60A" stroke-width="1"/>
+            <line x1="600" y1="0" x2="0" y2="400" stroke="#FFD60A" stroke-width="1"/>
+            <line x1="300" y1="0" x2="300" y2="400" stroke="#FFD60A" stroke-width="1"/>
+            <line x1="0" y1="200" x2="600" y2="200" stroke="#FFD60A" stroke-width="1"/>
+            <circle cx="300" cy="200" r="80" stroke="#FFD60A" stroke-width="1"/>
+            <circle cx="300" cy="200" r="40" stroke="#FFD60A" stroke-width="1"/>
+          </svg>
+          <div class="feat-icon">
+            <svg width="80" height="116" viewBox="0 0 220 320" fill="none">
+              <polygon points="130,10 30,170 95,170 70,310 190,130 120,130" fill="#FFD60A" opacity="0.2"/>
+              <polygon points="130,10 30,170 95,170 70,310 190,130 120,130" fill="none" stroke="#FFD60A" stroke-width="2" opacity="0.7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="featured-content">
+          <div class="post-category">Safety</div>
+          <h2 class="featured-title" id="featured-heading">5 Signs Your Switchboard Needs Upgrading</h2>
+          <p class="featured-excerpt">Ceramic fuses, tripping safety switches, and flickering lights aren't just annoying — they're warning signs of an electrical system that hasn't kept up with modern demand. Here's what to look for in Melbourne homes, especially the older Victorian-era properties across Hawthorn, Kew, and Richmond.</p>
+          <div class="post-meta">
+            <span>March 2026</span>
+            <span class="post-meta-dot" aria-hidden="true"></span>
+            <span>5 min read</span>
+            <span class="post-meta-dot" aria-hidden="true"></span>
+            <span>By Darkside Electrical</span>
+          </div>
+          <a href="#" class="btn-read" aria-label="Read: 5 Signs Your Switchboard Needs Upgrading">
+            Read Article →
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ALL POSTS GRID -->
+    <section class="posts-section" aria-labelledby="posts-heading">
+      <h2 id="posts-heading" class="sr-only">All Articles</h2>
+      <div class="posts-grid" id="posts-grid">
+
+        <article class="post-card" data-category="ev">
+          <div class="card-category">EV Charging</div>
+          <h3 class="card-title">EV Charger Install: What Hawthorn Homeowners Need to Know</h3>
+          <p class="card-excerpt">Not all homes are ready for a Level 2 charger. We break down load capacity, switchboard requirements, and what a full install actually involves — from permit to first charge.</p>
+          <div class="card-footer">
+            <span class="card-meta">Feb 2026 &nbsp;·&nbsp; 7 min</span>
+            <a href="#" class="card-link" aria-label="Read: EV Charger Install">Read →</a>
+          </div>
+        </article>
+
+        <article class="post-card" data-category="renovations">
+          <div class="card-category">Renovations</div>
+          <h3 class="card-title">When to Call an Electrician: A Melbourne Homeowner's Guide</h3>
+          <p class="card-excerpt">DIY has its place, but electrical work in Australia is licensed for a reason. Know exactly when you need a pro — and what to expect when you make the call.</p>
+          <div class="card-footer">
+            <span class="card-meta">Jan 2026 &nbsp;·&nbsp; 4 min</span>
+            <a href="#" class="card-link" aria-label="Read: When to Call an Electrician">Read →</a>
+          </div>
+        </article>
+
+        <article class="post-card" data-category="safety">
+          <div class="card-category">Safety</div>
+          <h3 class="card-title">Smoke Alarm Compliance in Victoria: What's Changed in 2025</h3>
+          <p class="card-excerpt">Victoria updated its smoke alarm regulations for rental properties. Here's exactly what landlords and property managers need to action before the deadline — and what the fines look like if you don't.</p>
+          <div class="card-footer">
+            <span class="card-meta">Dec 2025 &nbsp;·&nbsp; 5 min</span>
+            <a href="#" class="card-link" aria-label="Read: Smoke Alarm Compliance">Read →</a>
+          </div>
+        </article>
+
+        <article class="post-card" data-category="commercial">
+          <div class="card-category">Commercial</div>
+          <h3 class="card-title">Electrical Fit-Outs for Cafés: A Practical Checklist</h3>
+          <p class="card-excerpt">Opening a café in Melbourne's inner east? Your electrical requirements go well beyond a few powerpoints. Commercial kitchens, POS systems, outdoor lighting — here's what to plan for.</p>
+          <div class="card-footer">
+            <span class="card-meta">Nov 2025 &nbsp;·&nbsp; 6 min</span>
+            <a href="#" class="card-link" aria-label="Read: Café Electrical Fit-Outs">Read →</a>
+          </div>
+        </article>
+
+        <article class="post-card" data-category="guides">
+          <div class="card-category">Guides</div>
+          <h3 class="card-title">Understanding Your Electricity Bill: The Electrical Side of Things</h3>
+          <p class="card-excerpt">Old wiring, inefficient lighting, and a switchboard that's working harder than it should — your electrician can help reduce your bill. Here's what to look at first.</p>
+          <div class="card-footer">
+            <span class="card-meta">Oct 2025 &nbsp;·&nbsp; 8 min</span>
+            <a href="#" class="card-link" aria-label="Read: Understanding Your Electricity Bill">Read →</a>
+          </div>
+        </article>
+
+        <article class="post-card" data-category="renovations">
+          <div class="card-category">Renovations</div>
+          <h3 class="card-title">Heritage Home Wiring: What to Expect in Hawthorn's Victorian Terraces</h3>
+          <p class="card-excerpt">Rewiring a pre-1960 home comes with unique challenges — knob-and-tube wiring, asbestos-backed boards, and concealed conduit. What the process looks like when done properly.</p>
+          <div class="card-footer">
+            <span class="card-meta">Sep 2025 &nbsp;·&nbsp; 9 min</span>
+            <a href="#" class="card-link" aria-label="Read: Heritage Home Wiring">Read →</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- NEWSLETTER / CTA -->
+    <section class="newsletter" aria-labelledby="newsletter-heading">
+      <div class="newsletter-left">
+        <h2 id="newsletter-heading">STAY IN THE LOOP.</h2>
+        <p>New articles on electrical safety, home upgrades, and Melbourne regulations — direct to your inbox. No spam, unsubscribe any time.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="handleSubscribe(event)" novalidate aria-label="Email newsletter signup">
+        <label for="nl-email" class="sr-only">Email address</label>
+        <input
+          type="email"
+          id="nl-email"
+          class="newsletter-input"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+          inputmode="email"
+          aria-required="true"
+        />
+        <button type="submit" class="newsletter-submit">Subscribe →</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="ft-name">DARK<span>SIDE</span>&nbsp;ELECTRICAL</div>
+      <p class="ft-tagline">Licensed electricians serving Hawthorn and Melbourne's inner east. Available Monday – Saturday.</p>
+    </div>
+    <div>
+      <div class="ft-head">Services</div>
+      <ul class="ft-links">
+        <li><a href="index.html#services">Switchboard Upgrades</a></li>
+        <li><a href="index.html#services">Lighting Design</a></li>
+        <li><a href="index.html#services">EV Charger Install</a></li>
+        <li><a href="index.html#services">Residential Wiring</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-head">Contact</div>
+      <ul class="ft-links">
+        <li><a href="tel:0412000000">0412 000 000</a></li>
+        <li><a href="mailto:info@darksideelectrical.com.au">info@darksideelectrical.com.au</a></li>
+        <li><a href="index.html#contact">Hawthorn, VIC 3122</a></li>
+        <li style="margin-top:14px"><a href="#" rel="noopener noreferrer">Google Reviews ↗</a></li>
+      </ul>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 Darkside Electrical Pty Ltd &nbsp;|&nbsp; Vic Electrical Licence No. EC00000 &nbsp;|&nbsp; ABN 00 000 000 000</span>
+      <span class="ft-credit">Built to code. Just like the wiring. By <a href="https://jaques.design/" target="_blank" rel="noopener noreferrer">Jaques Design</a></span>
+    </div>
+  </footer>
+
+  <!-- Visually hidden helper -->
+  <style>.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }</style>
+
+  <script>
+    /* ─── MOBILE NAV ─────────────────────────────────────── */
+    const toggle = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
+
+    /* ─── CATEGORY FILTER ────────────────────────────────── */
+    function filterPosts(category) {
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach(b => {
+        const isActive = b.getAttribute('onclick').includes(`'${category}'`);
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      const cards = document.querySelectorAll('#posts-grid .post-card');
+      cards.forEach(card => {
+        const show = category === 'all' || card.dataset.category === category;
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      // Show/hide featured post for safety category only
+      const featured = document.getElementById('featured-post');
+      if (featured) {
+        featured.style.display = (category === 'all' || category === 'safety') ? 'grid' : 'none';
+      }
+    }
+
+    /* ─── NEWSLETTER SUBSCRIBE ───────────────────────────── */
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const input = document.getElementById('nl-email');
+      const btn = e.target.querySelector('.newsletter-submit');
+      const email = input.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        input.focus();
+        return;
+      }
+      btn.textContent = 'Subscribed!';
+      btn.disabled = true;
+      input.value = '';
+    }
+  </script>
+
+</body>
+</html>
