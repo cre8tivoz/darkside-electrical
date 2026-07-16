@@ -613,6 +613,149 @@
     .ft-credit a:hover,
     .ft-credit a:focus { border-color: var(--yellow); }
 
+
+
+    /* ─── NEW HIGH-VOLTAGE DESIGN LAYER ─────────────────── */
+    body {
+      background:
+        radial-gradient(circle at 80% 8%, rgba(255,214,10,0.12), transparent 28rem),
+        linear-gradient(180deg, #101010 0%, var(--dark) 42%, #101010 100%);
+    }
+    nav { box-shadow: 0 14px 40px rgba(0,0,0,0.32); }
+    .logo svg { filter: drop-shadow(0 0 12px rgba(255,214,10,0.5)); }
+    .hero {
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+      background:
+        linear-gradient(115deg, rgba(20,20,20,0.98) 0 50%, rgba(30,30,30,0.72) 50% 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 96px);
+      isolation: isolate;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 69px 0 0;
+      background:
+        linear-gradient(90deg, rgba(255,214,10,0.07) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,214,10,0.05) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(90deg, transparent, #000 30%, #000 72%, transparent);
+      opacity: 0.42;
+      pointer-events: none;
+      animation: gridDrift 18s linear infinite;
+    }
+    .hero::after {
+      right: 50%;
+      width: 5px;
+      box-shadow: 0 0 28px rgba(255,214,10,0.8);
+      animation: liveWire 3.6s ease-in-out infinite;
+    }
+    .hero-left { padding-left: clamp(24px, 6vw, 80px); }
+    .hero-h1 {
+      font-size: clamp(76px, 10vw, 150px);
+      letter-spacing: -0.01em;
+      text-shadow: 0 18px 56px rgba(0,0,0,0.45);
+    }
+    .hero-h1 .acc { text-shadow: 0 0 26px rgba(255,214,10,0.25); }
+    .hero-sub { max-width: 510px; }
+    .btn-primary, .btn-nav, .btn-dark {
+      box-shadow: 0 0 0 rgba(255,214,10,0);
+    }
+    .btn-primary:hover, .btn-nav:hover, .btn-dark:hover {
+      box-shadow: 0 0 32px rgba(255,214,10,0.25);
+    }
+    .hero-right {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255,214,10,0.18), transparent 18rem),
+        linear-gradient(135deg, #242424 0%, var(--dark-2) 52%, #101010 100%);
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .hero-panel {
+      position: absolute;
+      inset: clamp(36px, 6vw, 76px) clamp(24px, 5vw, 72px) 122px clamp(48px, 8vw, 112px);
+      border: 1px solid rgba(255,214,10,0.28);
+      background: rgba(20,20,20,0.42);
+      box-shadow: inset 0 0 60px rgba(255,214,10,0.04), 0 28px 80px rgba(0,0,0,0.38);
+      overflow: hidden;
+    }
+    .hero-panel::before,
+    .hero-panel::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+    .hero-panel::after {
+      inset: auto 24px 24px auto;
+      width: 42%; height: 22%;
+      border-left: 0; border-top: 0;
+      border-color: rgba(255,214,10,0.32);
+    }
+    .spark-field {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(255,214,10,0.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 74% 18%, rgba(255,214,10,0.72) 0 1px, transparent 2px),
+        radial-gradient(circle at 82% 62%, rgba(255,214,10,0.8) 0 2px, transparent 3px),
+        radial-gradient(circle at 24% 78%, rgba(255,214,10,0.55) 0 1px, transparent 2px);
+      filter: drop-shadow(0 0 10px rgba(255,214,10,0.9));
+      animation: sparkPulse 2.4s steps(2, end) infinite;
+    }
+    .hero-bolt {
+      width: min(42vw, 360px);
+      max-width: 74%;
+      filter: drop-shadow(0 0 18px rgba(255,214,10,0.45)) drop-shadow(0 0 54px rgba(255,214,10,0.22));
+      animation: boltFloat 5s ease-in-out infinite;
+    }
+    .hero-bolt .bolt-fill { animation: boltFlash 2.8s ease-in-out infinite; transform-origin: center; }
+    .hero-bolt .bolt-stroke { stroke-dasharray: 720; stroke-dashoffset: 720; animation: boltTrace 2.8s ease-in-out infinite; }
+    .panel-label {
+      position: absolute;
+      left: 28px; bottom: 26px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+    .panel-label span { color: var(--muted); display: block; margin-top: 6px; letter-spacing: 0.08em; }
+    .svc-card, .proc-step, .blog-card { position: relative; overflow: hidden; }
+    .svc-card::after, .proc-step::after, .blog-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0 35%, rgba(255,214,10,0.12), transparent 65% 100%);
+      transform: translateX(-120%);
+      transition: transform 0.55s ease;
+      pointer-events: none;
+    }
+    .svc-card:hover::after, .proc-step:hover::after, .blog-card:hover::after { transform: translateX(120%); }
+    .about-right::after {
+      content: 'ON SITE / INNER EAST';
+      position: absolute;
+      left: 24px; bottom: 24px;
+      z-index: 2;
+      padding: 10px 14px;
+      background: var(--yellow);
+      color: var(--dark);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes gridDrift { to { background-position: 72px 72px; } }
+    @keyframes liveWire { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; box-shadow: 0 0 44px rgba(255,214,10,0.95); } }
+    @keyframes sparkPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+    @keyframes boltFloat { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+    @keyframes boltFlash { 0%, 72%, 100% { opacity: 0.16; transform: scale(0.98); } 8%, 14% { opacity: 0.9; transform: scale(1.03); } 18% { opacity: 0.32; } 26% { opacity: 0.72; } }
+    @keyframes boltTrace { 0% { stroke-dashoffset: 720; opacity: 0.2; } 16%, 42% { stroke-dashoffset: 0; opacity: 0.95; } 100% { stroke-dashoffset: -720; opacity: 0.2; } }
+
     /* ─── ANIMATIONS ─────────────────────────────────────── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -634,6 +777,11 @@
       .btn-nav.desktop { display: none; }
       .menu-toggle { display: flex; }
 
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { clip-path: none; min-height: 420px; }
+      .hero-panel { inset: 40px 20px 98px; }
+      .hero-bolt { width: 220px; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero::after { display: none; }
       .hero-left { padding: 96px 20px 48px; }
@@ -754,10 +902,14 @@
           <line x1="400" y1="420" x2="400" y2="280" stroke="#FFD60A" stroke-width="2"/>
         </svg>
         <div class="hero-illus">
-          <svg width="200" height="290" viewBox="0 0 220 320" fill="none">
-            <polygon points="130,10 30,170 95,170 70,310 190,130 120,130" fill="#FFD60A" opacity="0.1"/>
-            <polygon points="130,10 30,170 95,170 70,310 190,130 120,130" fill="none" stroke="#FFD60A" stroke-width="1.5" opacity="0.5"/>
-          </svg>
+          <div class="hero-panel">
+            <div class="spark-field"></div>
+            <svg class="hero-bolt" viewBox="0 0 220 320" fill="none">
+              <polygon class="bolt-fill" points="130,10 30,170 95,170 70,310 190,130 120,130" fill="#FFD60A" opacity="0.16"/>
+              <polygon class="bolt-stroke" points="130,10 30,170 95,170 70,310 190,130 120,130" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+            <div class="panel-label">Live circuits<span>Animated safety-first energy mark</span></div>
+          </div>
         </div>
         <div class="stats-bar">
           <div class="stat">
@@ -799,7 +951,7 @@
     </div>
 
     <!-- SERVICES -->
-    <section class="services" id="services" aria-labelledby="services-heading">
+    <section class="services reveal" id="services" aria-labelledby="services-heading">
       <div class="sec-label" aria-hidden="true">What We Do</div>
       <h2 class="sec-h2" id="services-heading">SERVICES THAT COVER YOU</h2>
       <div class="svc-grid">
@@ -880,7 +1032,7 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="about" id="about" aria-labelledby="about-heading">
+    <section class="about reveal" id="about" aria-labelledby="about-heading">
       <div class="about-left">
         <div class="sec-label lt" aria-hidden="true">About Darkside</div>
         <h2 class="about-h2" id="about-heading">LOCAL.<br>LICENSED.<br><span class="acc">RELIABLE.</span></h2>
@@ -905,7 +1057,7 @@
     </section>
 
     <!-- PROCESS -->
-    <section class="process" id="process" aria-labelledby="process-heading">
+    <section class="process reveal" id="process" aria-labelledby="process-heading">
       <div class="sec-label lt" aria-hidden="true">How It Works</div>
       <h2 class="sec-h2" id="process-heading">SIMPLE. FAST. DONE.</h2>
       <div class="proc-grid">
@@ -933,7 +1085,7 @@
     </section>
 
     <!-- BLOG TEASER -->
-    <section class="blog-teaser" aria-labelledby="blog-heading">
+    <section class="blog-teaser reveal" aria-labelledby="blog-heading">
       <div class="sec-label lt" aria-hidden="true">From the Field</div>
       <h2 class="sec-h2" id="blog-heading">ELECTRICAL INSIGHTS</h2>
       <div class="blog-grid">
@@ -971,7 +1123,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="cta" id="contact" aria-labelledby="cta-heading">
+    <section class="cta reveal" id="contact" aria-labelledby="cta-heading">
       <h2 class="cta-h2" id="cta-heading">READY TO<br>GET STARTED?</h2>
       <div class="cta-right">
         <a href="estimate.html" class="btn-dark">Request a Quote</a>
@@ -1030,6 +1182,21 @@
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open navigation menu');
     }
+
+
+
+    // Scroll reveal for key sections
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach((el) => revealObserver.observe(el));
 
     // Close mobile nav on Escape
     document.addEventListener('keydown', (e) => {
